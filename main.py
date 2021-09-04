@@ -17,7 +17,7 @@ def export_music(wav_path):
     # 변환된 진폭, 주파수를 Dict으로 내보내기
     ex_dict = {}
     ex_dict['amplitude'] = ex_ampl
-    ex_dict['frequency'] = ex_freq
+    #ex_dict['frequency'] = ex_freq
     return ex_dict
 
 
