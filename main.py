@@ -1,6 +1,6 @@
 import librosa
 
-def export_music():
+def export_music(wav_path):
     ## wav load (data : wave data array, sr : sampling rate)
     data, sr = librosa.load(wav_path, sr=None, mono=True, offset=0.0, duration=None)
 
@@ -17,7 +17,7 @@ def export_music():
     # 변환된 진폭, 주파수를 Dict으로 내보내기
     ex_dict = {}
     ex_dict['amplitude'] = ex_ampl
-    ex_dict['frequency'] = ex_freq
+    #ex_dict['frequency'] = ex_freq
     return ex_dict
 
 
@@ -46,10 +46,20 @@ def changeMusic(data, sr):
   result = list(map(change123, music_per_sec))
   return result
 
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/vibrate', methods=['GET'])
+def predict():
+    music_id = request.args.get('music_id')
+    wave_path = './music/' + music_id + '.mp3' # 노래 경로
+    export_result = export_music(wave_path) # 음악 진폭, 주파수 변환
+    return export_result
+
 if __name__ == "__main__":
-    wav_path = './CantinaBand60.wav' # 나중에 노래 경로 수정 해야함
-    export_result = export_music()
-    print(export_result)
+    app.run()
+
 
 
 
